@@ -3,9 +3,7 @@ pipeline {
         kubernetes {
             yamlFile 'kaniko-pod.yaml'
         }
-}
-
-```
+    }
     environment {
         PROJECT_ID   = ''
         REGION       = 'asia-south1'
@@ -83,6 +81,4 @@ pipeline {
             echo "FAILED: Check logs"
         }
     }
-    ```
-
-    }
+}
