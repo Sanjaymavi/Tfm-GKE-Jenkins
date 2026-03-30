@@ -12,11 +12,12 @@ pipeline {
         choice(name: 'DEPLOY_ENV', choices: ['dev', 'qa', 'prod'], description: 'Target environment')
     }
 
+    
     environment {
         PROJECT_ID   = 'your-gcp-project-id'
         REGION       = 'asia-south1'
         GAR_REPO     = 'your-artifact-repo'
-        APP_NAME     = 'your-app-name'
+        APP_NAME     = 'node-app'
         CLUSTER_NAME = 'your-gke-cluster'
         CLUSTER_ZONE = 'asia-south1-a'
         NAMESPACE    = 'default'
@@ -24,6 +25,8 @@ pipeline {
         IMAGE_TAG_FINAL = "${params.IMAGE_TAG ?: env.BUILD_NUMBER}"
         IMAGE_URI = "${REGION}-docker.pkg.dev/${PROJECT_ID}/${GAR_REPO}/${APP_NAME}:${IMAGE_TAG_FINAL}"
     }
+
+
 
     stages {
 
@@ -90,12 +93,12 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Deploy to GKE') {
             steps {
                 sh '''
-                    sed "s|IMAGE_PLACEHOLDER|$IMAGE_URI|g" k8s/deployment.yaml | kubectl apply -n "$NAMESPACE" -f -
-                    kubectl apply -n "$NAMESPACE" -f k8s/service.yaml
+                    sed "s|IMAGE_PLACEHOLDER|$IMAGE_URI|g" node-app-deploy.yaml | kubectl apply -n "$NAMESPACE" -f -
+                    kubectl apply -n "$NAMESPACE" -f service.yaml
                 '''
             }
         }
