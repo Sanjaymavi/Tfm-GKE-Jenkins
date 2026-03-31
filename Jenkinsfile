@@ -30,6 +30,12 @@ pipeline {
             steps {
                 container('kaniko') {
                     sh '''
+                        curl -H "Metadata-Flavor: Google" \
+                        http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/email
+                        '''
+                }
+                container('kaniko') {
+                    sh '''
                     /kaniko/executor \
                       --dockerfile=Dockerfile \
                       --context=dir://$(pwd) \
