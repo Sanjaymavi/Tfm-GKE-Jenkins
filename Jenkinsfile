@@ -6,7 +6,7 @@ pipeline {
         }
     }
     environment {
-        PROJECT_ID   = ''
+        PROJECT_ID   = 'project-e85d8801-bd70-4ddd-8bc'
         REGION       = 'asia-south1'
         GAR_REPO     = 'jenkins-docker-repo'
         APP_NAME     = 'node-app'
