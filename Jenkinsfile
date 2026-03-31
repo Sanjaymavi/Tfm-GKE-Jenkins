@@ -30,9 +30,9 @@ pipeline {
             steps {
                 container('kaniko') {
                     sh '''
-                        curl -H "Metadata-Flavor: Google" \
-                        http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/email
-                        '''
+                        wget -qO- --header="Metadata-Flavor: Google" \
+                        http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/
+                    '''
                 }
                 container('kaniko') {
                     sh '''
