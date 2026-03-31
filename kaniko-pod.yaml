@@ -9,8 +9,6 @@ spec:
   containers:
     - name: kaniko
       image: gcr.io/kaniko-project/executor:latest
-      args:
-        - "--dockerfile=/dev/null"   # dummy
       tty: true
 
     - name: kubectl
